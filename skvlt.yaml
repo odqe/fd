@@ -1,0 +1,20 @@
+# Generated for project-scoped restoration with Skills Vault.
+total_sources: 1
+total_skills: 11
+scope: "project"
+
+sources:
+  "xixu-me/skills":
+    count: 11
+    skills:
+      - "github-actions-docs"
+      - "openclaw-secure-linux-cloud"
+      - "opensource-guide-coach"
+      - "readme-i18n"
+      - "running-claude-code-via-litellm-copilot"
+      - "secure-linux-web-hosting"
+      - "skills-cli"
+      - "tzst"
+      - "use-my-browser"
+      - "xdrop"
+      - "xget"

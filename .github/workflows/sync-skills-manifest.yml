@@ -1,0 +1,70 @@
+name: sync skills manifest
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Commit SHA from xixu-me/skills to sync from
+        required: true
+        type: string
+      source_repo:
+        description: Source repository full name
+        required: false
+        default: xixu-me/skills
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-skills-manifest
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      RETRY_ATTEMPTS: "5"
+    steps:
+      - name: Check out fd
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install manifest sync dependencies
+        run: bash scripts/retry-command.sh python -m pip install --disable-pip-version-check pyyaml
+
+      - name: Check out source snapshot
+        env:
+          SOURCE_REPO: ${{ inputs.source_repo }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          git clone --filter=tree:0 "https://github.com/${SOURCE_REPO}.git" "$RUNNER_TEMP/source-repo"
+          git -C "$RUNNER_TEMP/source-repo" fetch --depth=1 origin "$SOURCE_SHA"
+          git -C "$RUNNER_TEMP/source-repo" checkout --detach "$SOURCE_SHA"
+
+      - name: Rebuild skvlt manifest
+        run: python scripts/sync_skills_manifest.py --manifest skvlt.yaml --skills-root "$RUNNER_TEMP/source-repo/skills"
+
+      - name: Commit synced manifest
+        env:
+          SOURCE_REPO: ${{ inputs.source_repo }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- skvlt.yaml; then
+            echo "No manifest changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add skvlt.yaml
+          git commit -m "chore: sync skills manifest from ${SOURCE_REPO}@${SOURCE_SHA:0:7}"
+          git push origin HEAD:main
