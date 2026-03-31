@@ -1,6 +1,6 @@
 # Generated for project-scoped restoration with Skills Vault.
-total_sources: 1
-total_skills: 11
+total_sources: 2
+total_skills: 16
 scope: "project"
 
 sources:
@@ -18,3 +18,12 @@ sources:
       - "use-my-browser"
       - "xdrop"
       - "xget"
+
+  "lllllllama/ai-paper-reproduction-skill":
+    count: 5
+    skills:
+      - "ai-paper-reproduction"
+      - "env-and-assets-bootstrap"
+      - "minimal-run-and-audit"
+      - "paper-context-resolver"
+      - "repo-intake-and-plan"
