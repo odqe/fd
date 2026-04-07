@@ -1,12 +1,13 @@
 # Generated for project-scoped restoration with Skills Vault.
 total_sources: 2
-total_skills: 16
+total_skills: 17
 scope: "project"
 
 sources:
   "xixu-me/skills":
-    count: 11
+    count: 12
     skills:
+      - "develop-userscripts"
       - "github-actions-docs"
       - "openclaw-secure-linux-cloud"
       - "opensource-guide-coach"
