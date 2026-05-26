@@ -20,11 +20,18 @@ sources:
       - "xdrop"
       - "xget"
 
-  "lllllllama/ai-paper-reproduction-skill":
-    count: 5
+      
+  "lllllllama/rigorpilot-skills":
+    count: 11
     skills:
-      - "ai-paper-reproduction"
+      - "ai-research-reproduction"
       - "env-and-assets-bootstrap"
       - "minimal-run-and-audit"
-      - "paper-context-resolver"
+      - "analyze-project"
+      - "run-train"
+      - "safe-debug"
+      - "ai-research-explore"
+      - "explore-code"
+      - "explore-run"
       - "repo-intake-and-plan"
+      - "paper-context-resolver"
