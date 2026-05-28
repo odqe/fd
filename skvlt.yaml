@@ -20,7 +20,6 @@ sources:
       - "xdrop"
       - "xget"
 
-      
   "lllllllama/rigorpilot-skills":
     count: 11
     skills:
